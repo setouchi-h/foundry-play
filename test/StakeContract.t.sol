@@ -6,9 +6,17 @@ import "./mocks/MockERC20.sol";
 import "forge-std/Test.sol";
 
 contract StakeContractTest is Test {
-    function setUp() public {}
+    StakeContract public stakeContract;
+    MockERC20 public mockToken;
 
-    function testExample() public {
-        assertTrue(true);
+    function setUp() public {
+        stakeContract = new StakeContract();
+        mockToken = new MockERC20();
+    }
+
+    function testExample(uint8 amount) public {
+        mockToken.approve(address(stakeContract), amount);
+        bool stakePassed = stakeContract.stake(amount, address(mockToken));
+        assertTrue(stakePassed);
     }
 }
